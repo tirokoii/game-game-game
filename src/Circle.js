@@ -1,0 +1,41 @@
+import GameObject from './GameObject.js'
+export default class Circle extends GameObject {
+    constructor(game, x, y, radius, aStart, aEnd, color = 'green') {
+        super(game, x, y)
+        this.radius = radius
+        this.aStart = aStart
+        this.aEnd = aEnd
+        this.color = color
+
+        // Hastighet i x och y riktning
+        this.velocityX = 0
+        this.velocityY = 0
+        
+        // Studs-faktor (1.0 = perfekt studs, 0.8 = tappar energi)
+        this.bounce = 1.0
+    }
+
+    update(deltaTime) {
+        // Flytta baserat på hastighet
+        this.x += this.velocityX * deltaTime
+        this.y += this.velocityY * deltaTime
+
+        // Studsa mot väggarna
+        if (this.x < 0 || this.x + this.width > this.game.width) {
+            this.velocityX = -this.velocityX * this.bounce  // Byt X-riktning
+        }
+        if (this.y < 0 || this.y + this.height > this.game.height) {
+            this.velocityY = -this.velocityY * this.bounce  // Byt Y-riktning
+        }
+    }
+
+    draw(ctx) {
+        // Rita cirkeln
+        ctx.fillStyle = this.color
+        ctx.beginPath()
+        ctx.arc(this.x, this.y, this.radius, this.aStart, this.aEnd)
+        ctx.fill()
+        ctx.lineWidth = 10
+        ctx.stroke()
+    }
+}
