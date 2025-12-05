@@ -9,11 +9,11 @@ export default class Game {
 
         this.inputHandler = new InputHandler(this)
 
-        this.player = new Player(this, 50, 50, 50, 50, 'green')
+        this.player = new Player(this, 50, 50, 50, 50, 'red')
 
         // Skapa alla objekt i spelet
         this.gameObjects = [
-            new Rectangle(this, 200, 150, 50, 50, 'red')
+            new Rectangle(this, 200, 150, 50, 50, 'blue')
         ]
 
         // Sätt starthastighet (pixlar per millisekund)
@@ -23,19 +23,19 @@ export default class Game {
         // this.gameObjects[1].vy = 0.12
     }
 
-    update(deltaTime) {
-        // Uppdatera spelet utifrån deltaTime
-        this.gameObjects.forEach(obj => obj.update(deltaTime))
-        this.player.update(deltaTime)
+    // update(deltaTime) {
+    //     // Uppdatera spelet utifrån deltaTime
+    //     this.gameObjects.forEach(obj => obj.update(deltaTime))
+    //     this.player.update(deltaTime)
 
-        // Exempel på input-hantering
-        if (this.inputHandler.keys.has('r')) {
-            this.gameObjects[0].vx += 0.001 * deltaTime
-        }
-        if (this.inputHandler.keys.has('b')) {
-            this.gameObjects[1].vy -= 0.001 * deltaTime
-        }
-    }
+    //     // Exempel på input-hantering
+    //     if (this.inputHandler.keys.has('r')) {
+    //         this.gameObjects[0].vx += 0.001 * deltaTime
+    //     }
+    //     if (this.inputHandler.keys.has('b')) {
+    //         this.gameObjects[1].vy -= 0.001 * deltaTime
+    //     }
+    // }
 
     draw(ctx) {
         // Rita alla spelobjekt
