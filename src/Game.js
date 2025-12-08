@@ -23,19 +23,19 @@ export default class Game {
         // this.gameObjects[1].vy = 0.12
     }
 
-    // update(deltaTime) {
-    //     // Uppdatera spelet utifrån deltaTime
-    //     this.gameObjects.forEach(obj => obj.update(deltaTime))
-    //     this.player.update(deltaTime)
+    update(deltaTime) {
+        // Uppdatera spelet utifrån deltaTime
+        this.gameObjects.forEach(obj => obj.update(deltaTime))
+        this.player.update(deltaTime)
 
-    //     // Exempel på input-hantering
-    //     if (this.inputHandler.keys.has('r')) {
-    //         this.gameObjects[0].vx += 0.001 * deltaTime
-    //     }
-    //     if (this.inputHandler.keys.has('b')) {
-    //         this.gameObjects[1].vy -= 0.001 * deltaTime
-    //     }
-    // }
+        // Exempel på input-hantering
+        // if (this.inputHandler.keys.has('r')) {
+        //     this.gameObjects[0].vx += 0.001 * deltaTime
+        // }
+        // if (this.inputHandler.keys.has('b')) {
+        //     this.gameObjects[1].vy -= 0.001 * deltaTime
+        // }
+    }
 
     draw(ctx) {
         // Rita alla spelobjekt
