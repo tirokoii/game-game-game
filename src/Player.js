@@ -10,13 +10,19 @@ export default class Player extends GameObject {
         this.velocityY = 0
 
         // Rörelsehastighet (hur snabbt spelaren accelererar/rör sig)
-        this.moveSpeed = 0.3
+        this.moveSpeed = 0.4
         this.directionX = 0
         this.directionY = 0
 
         // Fysik egenskaper
-        this.jumpPower = -0.6 // negativ hastighet för att hoppa uppåt
+        this.jumpPower = -0.3 // negativ hastighet för att hoppa uppåt
+        this.jumpCount = 0
+        this.maxJumps = 2
+        this.dashPower = 5
+        this.dashCount = 0
+        this.maxDash = 1
         this.isGrounded = false // om spelaren står på marken
+
     }
 
     update(deltaTime) {
@@ -33,10 +39,46 @@ export default class Player extends GameObject {
         }
 
         // Hopp - endast om spelaren är på marken
-        if (this.game.inputHandler.keys.has(' ') && this.isGrounded) {
+        // if (this.game.inputHandler.keys.has(' ') && this.isGrounded) {
+        //     this.velocityY = this.jumpPower
+        //     this.isGrounded = false
+        // }
+
+        // Hopp - hanterar jumpcount och checkar input samt velocity
+        if (this.game.inputHandler.keys.has(' ') && (this.jumpCount < this.maxJumps)) {
+            console.log(this.jumpCount)
             this.velocityY = this.jumpPower
             this.isGrounded = false
+            this.game.inputHandler.keys.delete(' ')
+            this.jumpCount +++ 1
+            console.log(`grounded:  ${this.isGrounded}`)
         }
+
+        // Dash - hanterar dashcount och checkar input samt ökar velocity
+        window.setTimeout(() => {})
+        if (this.game.inputHandler.keys.has('Shift') && (this.dashCount < this.maxDash)) {
+            console.log(this.dashCount)
+            if (this.velocityX === 0) {
+                this.velocityX = this.dashPower
+            } else {
+                this.velocityX = this.dashPower * this.directionX
+            }
+            this.game.inputHandler.keys.delete('Shift')
+            this.dashCount +++ 1
+            console.log(this.dashCount)
+        }
+
+        if (this.velocityX > 0) {
+            this.velocityX -= this.game.friction * deltaTime
+            if (this.velocityX < 0) this.velocityX = 0
+        }
+
+        window.setTimeout(() => {
+            if (this.dashCount >= this.maxDash) this.dashCount = 0
+            console.log(" timeout check")
+        }, 5000)
+
+        if (this.isGrounded == true) this.jumpCount = 0
 
         // Applicera gravitation
         this.velocityY += this.game.gravity * deltaTime

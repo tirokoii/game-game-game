@@ -9,24 +9,24 @@ export default class Game {
         this.height = height
 
         // Fysik
-        this.gravity = 0.001 // pixels per millisekund^2
-        this.friction = 0.00015 // luftmotstånd för att bromsa fallhastighet
+        this.gravity = 0.0003 // pixels per millisekund^2
+        this.friction = 0.00001 // luftmotstånd för att bromsa fallhastighet
 
         this.inputHandler = new InputHandler(this)
 
-        this.player = new Player(this, 50, 50, 50, 50, 'green')
+        this.player = new Player(this, 50, 50, 50, 50, '#b75fa7ff')
 
         // Skapa plattformar för nivån
         this.platforms = [
             // Marken
-            new Platform(this, 0, this.height - 40, this.width, 40, '#654321'),
+            new Platform(this, 0, this.height - 40, this.width, 40, '#d22c85ff'),
             
             // Plattformar
-            new Platform(this, 150, this.height - 140, 150, 20, '#8B4513'),
-            new Platform(this, 400, this.height - 200, 120, 20, '#8B4513'),
-            new Platform(this, 100, this.height - 280, 100, 20, '#8B4513'),
-            new Platform(this, 550, this.height - 160, 100, 20, '#8B4513'),
-            new Platform(this, 350, this.height - 320, 140, 20, '#8B4513'),
+            new Platform(this, 150, this.height - 140, 150, 20),
+            new Platform(this, 400, this.height - 200, 120, 20),
+            new Platform(this, 100, this.height - 280, 100, 20),
+            new Platform(this, 550, this.height - 160, 100, 20),
+            new Platform(this, 350, this.height - 320, 140, 20),
         ]
 
         // Skapa andra objekt i spelet (valfritt)
