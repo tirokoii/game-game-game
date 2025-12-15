@@ -55,7 +55,6 @@ export default class Player extends GameObject {
         }
 
         // Dash - hanterar dashcount och checkar input samt ökar velocity
-        window.setTimeout(() => {})
         if (this.game.inputHandler.keys.has('Shift') && (this.dashCount < this.maxDash)) {
             console.log(this.dashCount)
             if (this.velocityX === 0) {
@@ -66,21 +65,17 @@ export default class Player extends GameObject {
             this.game.inputHandler.keys.delete('Shift')
             this.dashCount +++ 1
             console.log(this.dashCount)
-        }
 
-        if (this.velocityX > 0) {
-            this.velocityX -= this.game.friction * deltaTime
-            if (this.velocityX < 0) this.velocityX = 0
+            // Hanterar timern för dash
+            window.setTimeout(() => {
+                if (this.dashCount >= this.maxDash) this.dashCount = 0
+                console.log(" timeout check")
+            }, 5000)
         }
-
-        window.setTimeout(() => {
-            if (this.dashCount >= this.maxDash) this.dashCount = 0
-            console.log(" timeout check")
-        }, 5000)
 
         if (this.isGrounded == true) this.jumpCount = 0
 
-        // Applicera gravitation
+        // Applicera gravititet
         this.velocityY += this.game.gravity * deltaTime
         
         // Applicera luftmotstånd (friktion)
