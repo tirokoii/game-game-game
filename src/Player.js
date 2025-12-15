@@ -4,7 +4,7 @@ export default class Player extends GameObject {
     constructor(game, x, y, width, height, color) {
         super(game, x, y, width, height)
         this.color = color
-        
+        this.status = 'alive'
         // Nuvarande hastighet (pixels per millisekund)
         this.velocityX = 0
         this.velocityY = 0
@@ -46,17 +46,14 @@ export default class Player extends GameObject {
 
         // Hopp - hanterar jumpcount och checkar input samt velocity
         if (this.game.inputHandler.keys.has(' ') && (this.jumpCount < this.maxJumps)) {
-            console.log(this.jumpCount)
             this.velocityY = this.jumpPower
             this.isGrounded = false
             this.game.inputHandler.keys.delete(' ')
             this.jumpCount +++ 1
-            console.log(`grounded:  ${this.isGrounded}`)
         }
 
         // Dash - hanterar dashcount och checkar input samt ökar velocity
         if (this.game.inputHandler.keys.has('Shift') && (this.dashCount < this.maxDash)) {
-            console.log(this.dashCount)
             if (this.velocityX === 0) {
                 this.velocityX = this.dashPower
             } else {
@@ -64,7 +61,6 @@ export default class Player extends GameObject {
             }
             this.game.inputHandler.keys.delete('Shift')
             this.dashCount +++ 1
-            console.log(this.dashCount)
 
             // Hanterar timern för dash
             window.setTimeout(() => {

@@ -2,6 +2,7 @@ import Player from './Player.js'
 import InputHandler from './InputHandler.js'
 import Rectangle from './Rectangle.js'
 import Platform from './Platform.js'
+import Lava from './Lava.js'
 
 export default class Game {
     constructor(width, height) {
@@ -14,7 +15,7 @@ export default class Game {
 
         this.inputHandler = new InputHandler(this)
 
-        this.player = new Player(this, 50, 50, 50, 50, '#b75fa7ff')
+        this.player = new Player(this, 50, 50, 50, 50, '#37bd7eff')
 
         // Skapa plattformar för nivån
         this.platforms = [
@@ -29,6 +30,8 @@ export default class Game {
             new Platform(this, 350, this.height - 320, 140, 20),
         ]
 
+        this.lava = new Lava(this, 0, this.height, 1000, 1000, 'red')
+
         // Skapa andra objekt i spelet (valfritt)
         this.gameObjects = []
     }
@@ -39,9 +42,12 @@ export default class Game {
         
         // Uppdatera plattformar (även om de är statiska)
         this.platforms.forEach(platform => platform.update(deltaTime))
-        
+
         // Uppdatera spelaren
         this.player.update(deltaTime)
+
+        this.lava.update(deltaTime)
+
 
         // Antag att spelaren inte står på marken, tills vi hittar en kollision
         this.player.isGrounded = false
@@ -70,6 +76,12 @@ export default class Game {
             }
         })
 
+        const collision = this.player.getCollisionData(this.lava)
+
+        if (collision) {
+            this.player.status = 'dead'
+        }
+
         // Förhindra att spelaren går utanför skärmen horisontellt
         if (this.player.x < 0) {
             this.player.x = 0
@@ -88,5 +100,7 @@ export default class Game {
         
         // Rita spelaren
         this.player.draw(ctx)
+
+        this.lava.draw(ctx)
     }
 }
