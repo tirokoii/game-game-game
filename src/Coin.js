@@ -1,16 +1,36 @@
 import GameObject from './GameObject.js'
 
 export default class Coin extends GameObject {
-    constructor(game, x, y, size = 20, value = 10) {
+    constructor(game, x, y, size = 20, value = 10, color) {
         super(game, x, y, size, size)
         this.size = size
-        this.color = 'yellow'
+        this.color = "#bae1ff"
         this.value = value // Poäng för detta mynt
-        
+
+        this.colorIndex = 0
+        this.colorSpectrum = [
+            "#ffb3ba",
+            "#ffdfba", 
+            "#ffffba",
+            "#baffc9",
+            "#bae1ff"
+        ]
+
         // Bob animation
         this.bobOffset = 0
-        this.bobSpeed = 0.006 // hur snabbt myntet gungar
-        this.bobDistance = 5 // hur långt upp/ner myntet rör sig
+        this.bobSpeed = 0.002 // hur snabbt myntet gungar
+        this.bobDistance = 20 // hur långt upp/ner myntet rör sig
+    }
+    
+    colorChange() {
+        console.log("Eyo")
+        setTimeout(() => {
+            this.color = this.colorSpectrum[this.colorIndex]
+            this.colorIndex += 1
+            if (this.colorIndex > this.colorSpectrum.length) {
+                this.colorIndex = 0
+            }
+        }, 2000)
     }
 
     update(deltaTime) {
@@ -18,9 +38,10 @@ export default class Coin extends GameObject {
         this.bobOffset += this.bobSpeed * deltaTime
     }
 
+
     draw(ctx) {
         // Beräkna y-position med bob
-        const bobY = Math.sin(this.bobOffset) * this.bobDistance
+        const bobY = Math.cos(this.bobOffset) * this.bobDistance
         // Rita myntet som en cirkel
         ctx.fillStyle = this.color
         ctx.beginPath()
