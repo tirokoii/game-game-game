@@ -8,7 +8,7 @@ export default class Player extends GameObject {
     constructor(game, x, y, width, height, color) {
         super(game, x, y, width, height)
         this.color = color
-        
+
         // Nuvarande hastighet (pixels per millisekund)
         this.velocityX = 0
         this.velocityY = 0
@@ -63,6 +63,14 @@ export default class Player extends GameObject {
         if (this.game.inputHandler.keys.has(' ') && this.isGrounded) {
             this.velocityY = this.jumpPower
             this.isGrounded = false
+        }
+        console.log("jumpCancel state: " + this.game.inputHandler.jumpCancel)
+        if (this.game.inputHandler.jumpCancel == 1) {
+            console.log("True")
+            setTimeout(() => {
+                this.velocityY = -this.game.gravity * 0.3
+                this.game.inputHandler.jumpCancel = 0  
+            }, 10);
         }
 
         // Applicera gravitation
